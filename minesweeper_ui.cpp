@@ -1,22 +1,19 @@
 //
 //  minesweeper_ui.cpp
-//  
+//
 //
 //  Created by Taylor Little on 7/4/23.
 //
 
-#include <stdio.h>
 #include <iostream>
-#include <string.h>
-#include <stdlib.h>
+#include <iterator>
 #include <vector>
 
 using namespace std;
 
-int check_guess(int guess) {
-    int safe_spaces[13] = {1, 2,3, 4, 5, 7, 8, 10, 11, 12, 13, 14, 15};
-    int check;
-    for (int i; i < 13; i++) {
+bool check_guess(int guess) {
+    int safe_spaces[13] = {1, 2, 3, 4, 5, 7, 8, 10, 11, 12, 13, 14, 15};
+    for (int i = 0; i < 13; i++) {
         if (safe_spaces[i] == guess) {
             return true;
         }
@@ -24,26 +21,43 @@ int check_guess(int guess) {
     return 0;
 }
 
-    
 int main() {
     
-    int check;
+    bool check;
     int guess;
-    int old_guesses[13] = {};
+    int score = 0;
+    int spaces_left = 13;
+
     
     do {
-        printf("Enter guess: ");
-        scanf("%d", &guess);
+        cout << "Enter guess: " << endl;
+        cin >> guess;
+        
         check = check_guess(guess);
+        
+        if (check == true) {
+            score = score + 200;
+            spaces_left = spaces_left - 1;
+            cout << "Guess: " << guess << endl;
+            cout << "Score: " << score << endl;
+            cout << "Safe spaces left: " << spaces_left << endl;
+            
+        }
+
     }
-    while (check == 1);
+    while (check == true);
+    
+    cout << "You hit a pothole. Gameover!" << endl;
+    cout << "Score: " << score << endl;
     
     return 0;
+    
 
 }
 
 
 
                 
+
 
 
