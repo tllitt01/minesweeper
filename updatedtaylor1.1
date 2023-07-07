@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+bool check_guess(int guess) {
+    int safe_spaces[13] = {1, 2, 3, 4, 5, 7, 8, 10, 11, 12, 13, 14, 15};
+    for (int i = 0; i < 13; i++) {
+        if (safe_spaces[i] == guess) {
+            return true;
+        }
+    }
+    return false;
+}
+
+int main() {
+    int guess;
+    int score = 0;
+    int spaces_left = 13;
+    bool already_guessed = false;
+
+    do {
+        printf("Enter guess: ");
+        scanf("%d", &guess);
+        
+        if (check_guess(guess)) {
+            if (already_guessed) {
+                printf("Already guessed. Try again.\n");
+                continue;
+            }
+            
+            already_guessed = true;
+            score += 200;
+            spaces_left--;
+            
+            printf("Guess: %d\n", guess);
+            printf("Score: %d\n", score);
+            printf("Safe spaces left: %d\n", spaces_left);
+        }
+        else {
+            already_guessed = false;
+        }
+    } while (check_guess(guess));
+
+    printf("You hit a pothole. Game over!\n");
+    printf("Score: %d\n", score);
+
+    return 0;
+}
