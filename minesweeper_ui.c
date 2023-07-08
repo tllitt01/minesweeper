@@ -6,14 +6,12 @@
 //
 
 #include <stdio.h>
-#include <string.h>
+#include <stdbool.h>
 
-
-using namespace std;
 
 bool check_guess(int guess) {
-    int safe_spaces[13] = {1, 2,3, 4, 5, 7, 8, 10, 11, 12, 13, 14, 15};
-    for (int i; i < 13; i++) {
+    int safe_spaces[13] = {1, 2, 3, 4, 5, 7, 8, 10, 11, 12, 13, 14, 15};
+    for (int i = 0; i < 13; i++) {
         if (safe_spaces[i] == guess) {
             return true;
         }
@@ -32,13 +30,18 @@ int main() {
         printf("Enter guess: ");
         scanf("%d", &guess);
         check = check_guess(guess);
+        
+//        printf("guess = %d\n", guess);
+//        printf("check: %d\n", check);
+        
         if (check == 1) {
             score = score + 200;
             spaces_left = spaces_left - 1;
+
             printf("Guess: %d\n", guess);
             printf("Score: %d\n", score);
             printf("Safe spaces left: %d\n", spaces_left);
-            
+
         }
 
     }
@@ -55,6 +58,5 @@ int main() {
 
 
                 
-
 
 
