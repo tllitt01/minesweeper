@@ -105,8 +105,8 @@ for(int i=0;i<numColumns;i++)
 			}
 			
 		}
-		printf("%d",mapUpdated[j][i]);
-			printf(" ");
+		//printf("%d",mapUpdated[j][i]);
+			//printf(" ");
 	}
 }
 }
