@@ -1,0 +1,69 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+bool check_guess(int guess, bool map[][4]) {
+    int safe_spaces[13] = {1, 2, 3, 4, 5, 7, 8, 10, 11, 12, 13, 14, 15};
+    for (int i = 0; i < 13; i++) {
+        if (safe_spaces[i] == guess) {
+            map[(guess - 1) / 4][(guess - 1) % 4] = false;
+            return true;
+        }
+    }
+    return false;
+}
+
+void print_map(bool map[][4]) {
+    printf("Map:\n");
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            if (map[i][j]) {
+                printf(" X");
+            } else {
+                printf(" .");
+            }
+        }
+        printf("\n");
+    }
+    printf("\n");
+}
+
+int main() {
+    int guess;
+    int score = 0;
+    int spaces_left = 13;
+    bool already_guessed[16] = { false };
+    bool map[4][4] = {
+        { true, true, true, true },
+        { true, true, true, true },
+        { true, true, true, true },
+        { true, true, true, true }
+    };
+
+    printf("Welcome to the game!\n");
+    print_map(map);
+
+    do {
+        printf("Enter guess: ");
+        scanf("%d", &guess);
+        
+        if (check_guess(guess, map)) {
+            if (already_guessed[guess]) {
+                printf("Already guessed. Try again.\n");
+                continue;
+            }
+            
+            already_guessed[guess] = true;
+            score += 200;
+            spaces_left--;
+            
+            printf("Guess: %d\n", guess);
+            printf("Score: %d\n", score);
+            printf("Safe spaces left: %d\n", spaces_left);
+        }
+    } while (check_guess(guess, map));
+
+    printf("You hit a pothole. Game over!\n");
+    printf("Score: %d\n", score);
+
+    return 0;
+}
