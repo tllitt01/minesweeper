@@ -129,8 +129,10 @@ for(int i=0;i<numColumns;i++)
 				already_guessed = false;				// false means you hit a pothole.
 				return;
 			}
-			else if(map[j][i]!=9)
+			else if(mapUpdated[j][i]!=9)
 				already_guessed = true;
+			else
+				already_guessed=false;
 			int minRow;
 			    if(j - 1 >= 0) 
 					minRow =j-1;
@@ -178,9 +180,15 @@ for(int i=0;i<numColumns;i++)
 void print_map(int guess)
  {
 	 int numbr=0;
-    printf("\nPlaces you have guessed will show as the number of potholes in their radius.\nMap:\n");
+    printf("\nPlaces you have guessed will show as the number of potholes in their radius.\nMap:\n    ");
+	for(int k=1; k<=numColumns;k++)
+	{
+		printf("%d ",k);
+	}
+	printf("\n\n");
     for (int i = 0; i < numColumns; i++) 
 	{
+		printf("%d   ",i+1);
         for (int j = 0; j < numRows; j++) 
 		{
 			numbr++;
@@ -201,17 +209,27 @@ void main() {
     int guess;
     int score = 0;
     int spaces_left;
+	char play[50];
+	bool playAgain=true;
 	//int potsLeft=numPot;
-   
+   while(playAgain)
+   {
+	   score=0;
 	printf("\n	Welcome to the driving course! Do your best to avoid the potholes!\n	If you want to stop at any point, please type 0 when it asks you to make a guess.\n");
 	mapMake();
 	spaces_left = (numRows*numColumns)-numPot;
     do {
         printf("	Enter guess: ");
         scanf("%d", &guess);
+		if(guess>numRows*numColumns)
+		{
+			printf("	Please make sure your guess is within the bounds of the map.\n");
+			continue;
+		}
 		if(guess==0)
 			return;
 		check_guess_update_map(guess);
+		
         if (checking) {
             if (already_guessed)
 				{
@@ -222,8 +240,24 @@ void main() {
             score += 200;
             spaces_left--;
 
-            printf("	Guess: %d\n", guess);
-			
+           // printf("	Guess: %d\n", guess);
+			if(spaces_left==0)
+			{
+				printf("	Congrats! You won the game. You have avoided all of the potholes and safely passed the driving test.\n");
+				printf("Would you like to play again? Type Y if you would like to play again, or anything else if you would like to quit: ");
+				scanf("%s",play);
+				play[0]=toupper(play[0]);
+				if(strcmp(play, "Y")==0)
+				{
+				playAgain=true;
+				}
+				else 
+				{
+					playAgain=false;
+					return;
+				}
+	
+			}
 			if(guess==0)
 			return;
 			printf("\n	Potholes in the radius of your guess:  %d\n", map2Val);
@@ -238,8 +272,20 @@ void main() {
 
     printf("	You hit a pothole. Game over!\n");
     printf("	Score: %d\n", score);
+	printf("Would you like to play again? Type Y if you would like to play again, or anything else if you would like to quit: ");
+				scanf("%s",play);
+				play[0]=toupper(play[0]);
+				if(strcmp(play, "Y")==0)
+				{
+				playAgain=true;
+				}
+				else 
+				{
+					playAgain=false;
+					return;
+				}
 	//printf("\nPotholes left: %d\n",potsLeft);
-
+}
    
 	free(map);
 	return ;
