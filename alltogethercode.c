@@ -205,7 +205,7 @@ void print_map(int guess)
     printf("\n");
 }
 //##########################################################################################
-void main() {
+int main() {
     int guess;
     int score = 0;
     int spaces_left;
@@ -227,7 +227,7 @@ void main() {
 			continue;
 		}
 		if(guess==0)
-			return;
+			return 0;
 		check_guess_update_map(guess);
 		
         if (checking) {
@@ -254,12 +254,12 @@ void main() {
 				else 
 				{
 					playAgain=false;
-					return;
+					return 0;
 				}
 	
 			}
 			if(guess==0)
-			return;
+			return 0;
 			printf("\n	Potholes in the radius of your guess:  %d\n", map2Val);
             printf("\n	Score: %d\n", score);
 			//printf("\n\nPotholes left: %d", potsLeft);
@@ -288,5 +288,5 @@ void main() {
 }
    
 	free(map);
-	return ;
+	return 0;
 }
