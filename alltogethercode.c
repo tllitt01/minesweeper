@@ -282,7 +282,7 @@ int main() {
 				else 
 				{
 					playAgain=false;
-					return;
+					return 0;
 				}
 	//printf("\nPotholes left: %d\n",potsLeft);
 }
