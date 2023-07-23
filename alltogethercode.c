@@ -224,24 +224,26 @@ int main() {
    {
 	   score=0;
 	printf("\n	Welcome to the driving course! Do your best to avoid the potholes!\n	If you want to stop at any point, please type 0 when it asks you to make a guess.\n");
-	mapMake();
-	spaces_left = (numRows*numColumns)-numPot;
+	mapMake(); //makes map and takes difficulty
+	spaces_left = (numRows*numColumns)-numPot; // amount of spots left that are not potholes
     do {
-        printf("	Enter guess: ");
-        scanf("%d", &guess);
+        printf("\n	Make a guess between 1 and %d",numRows*numColumns);
+	printf(".\n After your first guess, if you would like to guess at a specific space,\n you may calculate that spot by multiplying the previous row by %d",numColumns);
+	printf(" (previous row is 0 if guessing in row 1) then adding the number of the column you are guessing in.\n Enter guess: ");
+        scanf("%d", &guess); //takes guess
 		if(guess>numRows*numColumns)
 		{
-			printf("	Please make sure your guess is within the bounds of the map.\n");
+			printf("	Please make sure your guess is within the bounds of the map.\n"); //makes sure no out of bounds guesses
 			continue;
 		}
 		if(guess==0)
-			return 0;
+			return 0; // stated at begining of game, if you guess 0, is exits the game.
 		check_guess_update_map(guess);
 		
         if (checking) {
             if (already_guessed)
 				{
-                printf("	Already guessed. Try again.\n");
+                printf("	Already guessed. Try again.\n"); // can't up your score by guessign a spot you already did
                 continue;
 				}
 
@@ -251,10 +253,10 @@ int main() {
            // printf("	Guess: %d\n", guess);
 			if(spaces_left==0)
 			{
-				printf("	Congrats! You won the game. You have avoided all of the potholes and safely passed the driving test.\n");
+				printf("	Congrats! You won the game. You have avoided all of the potholes and safely passed the driving test.\n"); //YAY
 				printf("Would you like to play again? Type Y if you would like to play again, or anything else if you would like to quit: ");
 				scanf("%s",play);
-				play[0]=toupper(play[0]);
+				play[0]=toupper(play[0]);// so that y or Y works
 				if(strcmp(play, "Y")==0)
 				{
 				playAgain=true;
@@ -267,22 +269,22 @@ int main() {
 	
 			}
 			if(guess==0)
-			return 0;
-			printf("\n	Potholes in the radius of your guess:  %d\n", map2Val);
+			return 0; // stated earlier, saying 0 exits game
+			printf("\n	Potholes in the radius of your guess:  %d\n", map2Val); // prints potholes around you
             printf("\n	Score: %d\n", score);
 			//printf("\n\nPotholes left: %d", potsLeft);
             printf("\n	Safe spaces left: %d", spaces_left);
-			print_map(guess);
-			map2Val=0;
+			print_map(guess); // prints guess onto map
+			map2Val=0; // resets the value of potholes in radius
         }
         
-    } while (checking);
+    } while (checking); // this whole thing is basically, if pothole, then you lose 
 
     printf("	You hit a pothole. Game over!\n");
     printf("	Score: %d\n", score);
 	printf("Would you like to play again? Type Y if you would like to play again, or anything else if you would like to quit: ");
 				scanf("%s",play);
-				play[0]=toupper(play[0]);
+				play[0]=toupper(play[0]);// so that Y or y works
 				if(strcmp(play, "Y")==0)
 				{
 				playAgain=true;
@@ -295,6 +297,14 @@ int main() {
 	//printf("\nPotholes left: %d\n",potsLeft);
 }
    
+//all of these frees the malloc stuff and makes sure map is different every time
+	free(pots);
+   for (int i = 0; i < numColumns; i++)
+	   {
+    free(map[i]);
+    free(mapUpdated[i]);
+	}
 	free(map);
+	free(mapUpdated);
 	return 0;
 }
